@@ -1,0 +1,4 @@
+# desc "Explaining what the task does"
+# task :polish_places do
+#   # Task goes here
+# end

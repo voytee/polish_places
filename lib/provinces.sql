@@ -14,4 +14,3 @@ INSERT INTO provinces (id, name, code) VALUES (13, 'świętokrzyskie', '26');
 INSERT INTO provinces (id, name, code) VALUES (14, 'warmińsko-mazurskie', '28');
 INSERT INTO provinces (id, name, code) VALUES (15, 'wielkopolskie', '30');
 INSERT INTO provinces (id, name, code) VALUES (16, 'zachodniopomorskie', '32');
-

@@ -7,7 +7,7 @@ class CreateProvinces < ActiveRecord::Migration
 
     sql = File.open('vendor/plugins/polish_places/lib/provinces.sql')
     sql.each_line do |line|
-      execute line
+      execute line.rstrip('\n')
     end
     
   end

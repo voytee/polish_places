@@ -21,7 +21,7 @@ class CreatePlaces < ActiveRecord::Migration
     file = File.new('vendor/plugins/polish_places/lib/places.sql')
     sql = file.readlines
     sql.in_groups_of(64).each do |g|
-      execute g.map{|t| t.rstrip('\n')}.join
+      execute g.map{|t| t.rstrip}.join
     end
   end
   

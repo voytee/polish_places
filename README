@@ -57,17 +57,32 @@ Plugin provides two models:
     '14' =>'parcela',
     '29' =>'stacja oceny odmian',
     '99' =>'część miasta'
-  }
+  } # this is standard GUS notation
 
   GENDERS hash is a constant of Place class which can be accessed through Place::GENDERS 
+
+Our two models (Place and Province) provides data getting methods based on named scope, which allow
+user to build quite complicated queries in a simple way.
+
+Named scopes for Place model:
+
+      	     all_genders
+  	     cities
+  	     villages
+  	     cities_and_villages
+  	     by_gender_code( code )
+  	     by_gender( gender_name )
 
 II. Instalation
 
 1) From your rails app root type:
+   
    ruby ./script/plugin install git://github.com/voytee/polish_places.git
-   (This may take few minutes because there're more than 100k records to populate in db)
 
 2) rake polish_places:install
+   
+   (This may take few minutes because there're more than 100k records to populate in db)
+   This task will create places and provinces table, create needed indexes and insert the records
     
 To uninstall the plugin: 
    rake polish_places:uninstall
@@ -76,8 +91,6 @@ III. Final notes
 
 Plugin was developed and tested using: ruby 1.8.6, Rails 2.3.2, Postgres83	 
 If you have any suggestions or want to report a bug feel free to send me an email (wpasternak@gmail.com)
-
-
 
 Example
 =======
@@ -92,7 +105,7 @@ province = Province.find(1)
 province.places
 
 #Getting all cities from province
-province.places.cities
+province.places.cities # please note that 'cities' is a named scope so you can easily nest other conditions if needed
 
 #Getting all cities and villages from province
 province.places.cities_and_villages
@@ -107,6 +120,9 @@ Place.all_genders
 #Getting all cities
 Place.cities
 
+#Getting all villages
+Place.villages	
+
 #Getting all cities and villages
 Place.cities_and_villages
 
@@ -116,5 +132,9 @@ Place.by_gender('miasto') # gets cities by polish gender name (see GENDERS hash 
 
 #Gettin an object gender
 Place.first.gender # returns polish name of the gender
+
+
+
+
 
 Copyright (c) 2009 [polish_places voytee(wpasternak@gmail.com)], released under the MIT license

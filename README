@@ -66,12 +66,12 @@ user to build quite complicated queries in a simple way.
 
 Named scopes for Place model:
 
-      	     all_genders
-  	     cities
-  	     villages
-  	     cities_and_villages
-  	     by_gender_code( code )
-  	     by_gender( gender_name )
+all_genders
+cities
+villages
+cities_and_villages
+by_gender_code( code )
+by_gender( gender_name )
 
 II. Instalation
 

@@ -16,7 +16,8 @@ class CreatePlaces < ActiveRecord::Migration
     sql.each_line do |line|
       execute line.rstrip
     end
-    
+  end
+
   def self.down
     remove_index :places, :province_id    
     remove_index :places, :name    

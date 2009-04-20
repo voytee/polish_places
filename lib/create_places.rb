@@ -11,20 +11,12 @@ class CreatePlaces < ActiveRecord::Migration
     add_index :places, [:name, :gender_code]
     add_index :places, [:province_id, :name]
     add_index :places, [:province_id, :name, :gender_code]
-
-#    sql = File.open('vendor/plugins/polish_places/lib/places.sql')
-#    buff = ""
-#    sql.each_line do |line|
-#      execute line
-#    end
-
-    file = File.new('vendor/plugins/polish_places/lib/places.sql')
-    sql = file.readlines
-    sql.in_groups_of(64).each do |g|
-      execute g.map{|t| t.rstrip}.join
+    
+    sql = File.open('vendor/plugins/polish_places/lib/places.sql')
+    sql.each_line do |line|
+      execute line.rstrip
     end
-  end
-  
+    
   def self.down
     remove_index :places, :province_id    
     remove_index :places, :name    

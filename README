@@ -1,13 +1,120 @@
 PolishPlaces
 ============
 
-Introduction goes here.
+I. Overview:
+
+Plugin creates db structure storing data about polish provinces, cities and other terain objects across Poland
+Data is based on GUS (Główny Urząd Statystyczny) SIMC resources which are available here: http://www.stat.gov.pl/broker/access/prefile/listPreFiles.jspa
+It was converted from xml to a standard relation - database
+
+Plugin provides two models: 
+1.) Province stores information about all 16 polish provinces - their name and the universal code of each one
+2.) Place - stores all polish cities, villages and even more - it stores also data of objects such us train stations, groups of houses, forester's lodges water mills, etc.
+    Complete list of object types is given below: [ in polish transcription ]
+
+  GENDERS = {
+    '00' =>'część miejscowości',
+    '15' =>'folwark',
+    '30' =>'zakład hodowli zarodowej',
+    '01' =>'wieś',
+    '16' =>'schronisko turystyczne',
+    '31' =>'stacja hodowli roślin',
+    '02' =>'kolonia',
+    '17' =>'klasztor',
+    '32' =>'szkoła',
+    '03' =>'przysiółek',
+    '18' =>'tartak',
+    '33' =>'ośrodek szkolny',
+    '04' =>'osada',
+    '19' =>'cegielnia',
+    '34' =>'zakład wychowawczy',
+    '05' =>'osada leśna',
+    '20' =>'elektrownia',
+    '35' =>'zakład leczniczy',
+    '06' =>'osiedle',
+    '21' =>'rybakówka',
+    '36' =>'sanatorium',
+    '07' =>'stacja PKP',
+    '22' =>'bosmanat',
+    '37' =>'uzdrowisko',
+    '08' =>'nadleśnictwo',
+    '23' =>'strażniczówka',
+    '38' =>'ośrodek wypoczynkowy',
+    '09' =>'leśniczówka',
+    '24' =>'młyn',
+    '39' =>'letnisko',
+    '10' =>'gajówka',
+    '25' =>'śluza',
+    '11' =>'grupa domów',
+    '26' =>'zakład doświadczalny',
+    '95' =>'dzielnica',
+    '12' =>'wybudowanie',
+    '27' =>'PAN',
+    '96' =>'miasto',
+    '13' =>'majątek',
+    '28' =>'instytut',
+    '98' =>'delegatura',
+    '14' =>'parcela',
+    '29' =>'stacja oceny odmian',
+    '99' =>'część miasta'
+  }
+
+  GENDERS hash is a constant of Place class which can be accessed through Place::GENDERS 
+
+II. Instalation
+
+1) From your rails app root type:
+   ruby ./script/plugin install git://github.com/voytee/polish_places.git
+   (This may take few minutes because there're more than 100k records to populate in db)
+
+2) rake polish_places:install
+    
+To uninstall the plugin: 
+   rake polish_places:uninstall
+
+III. Final notes
+
+Plugin was developed and tested using: ruby 1.8.6, Rails 2.3.2, Postgres83	 
+If you have any suggestions or want to report a bug feel free to send me an email (wpasternak@gmail.com)
+
 
 
 Example
 =======
 
-Example goes here.
+#Getting a province
+province = Province.find(7)             #  by id
+province = Province.find_by_code('14')  #  by province code
+province = Province.find_by_name('mazowieckie') # by province name
+
+#Getting all places from a province
+province = Province.find(1)
+province.places
+
+#Getting all cities from province
+province.places.cities
+
+#Getting all cities and villages from province
+province.places.cities_and_villages
+
+#Getting all sawmills from a province 'mazowieckie'
+Province.find_by_name('mazowieckie').places.by_gender('tartak')
 
 
-Copyright (c) 2009 [name of plugin creator], released under the MIT license
+#Getting all objects
+Place.all_genders
+
+#Getting all cities
+Place.cities
+
+#Getting all cities and villages
+Place.cities_and_villages
+
+#Getting an object of specyfied gender
+Place.by_gender_code('96') # gets cities (see GENDERS hash for allowed codes) 
+Place.by_gender('miasto') # gets cities by polish gender name (see GENDERS hash for allowed names)
+
+#Gettin an object gender
+Place.first.gender # returns polish name of the gender
+
+Copyright (c) 2009 [polish_places voytee(wpasternak@gmail.com)], released under the MIT license
